@@ -21,5 +21,8 @@
   },
   "dependencies": {
     "@tdd-cli-dev/utils": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
