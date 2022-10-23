@@ -1,7 +1,7 @@
 {
   "name": "@tdd-cli-dev/cli",
   "version": "1.0.0",
-  "description": "tdd-cli-dev core",
+  "description": "tdd-cli-dev cli",
   "author": "sjfewo <245476427@qq.com>",
   "homepage": "",
   "license": "ISC",

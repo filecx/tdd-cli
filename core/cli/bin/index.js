@@ -1,4 +1,4 @@
-'use strict';
+#!/usr/bin/env node
 
 const utils = require('@tdd-cli-dev/utils');
 
