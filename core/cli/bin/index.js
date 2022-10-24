@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
-const utils = require('@tdd-cli-dev/utils');
+const importLocal = require('import-local');
 
-utils();
-console.log('hello tdd-cli')
+// 检查是否是本地的模块
+if (importLocal(__filename)) {
+    require('npmlog').info('cli', '正在使用 tdd-cli 本地版本');
+} else {
+    require('../lib')(process.argv.slice(2))
+}
