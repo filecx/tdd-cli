@@ -24,8 +24,10 @@
     "test": "echo \"Run testing from core\""
   },
   "dependencies": {
-    "@tdd-cli-dev/log": "1.0.0",
+    "@tdd-cli-dev/log": "^1.0.0",
+    "colors": "^1.4.0",
     "import-local": "^3.1.0",
-    "npmlog": "^7.0.1"
+    "npmlog": "^7.0.1",
+    "semver": "^7.3.8"
   }
 }
