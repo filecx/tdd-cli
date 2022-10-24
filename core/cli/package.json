@@ -1,6 +1,6 @@
 {
   "name": "@tdd-cli-dev/cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tdd-cli-dev cli",
   "author": "sjfewo <245476427@qq.com>",
   "homepage": "",
@@ -24,10 +24,11 @@
     "test": "echo \"Run testing from core\""
   },
   "dependencies": {
-    "@tdd-cli-dev/log": "^1.0.0",
+    "@tdd-cli-dev/log": "1.0.0",
     "colors": "^1.4.0",
     "import-local": "^3.1.0",
     "npmlog": "^7.0.1",
+    "root-check": "^1.0.0",
     "semver": "^7.3.8"
   }
 }
