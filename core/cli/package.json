@@ -26,6 +26,7 @@
   "dependencies": {
     "@tdd-cli-dev/log": "file:../../utils/log",
     "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
     "import-local": "^3.1.0",
     "minimist": "^1.2.7",
     "npmlog": "^7.0.1",
