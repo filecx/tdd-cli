@@ -2,7 +2,7 @@
   "name": "@tdd-cli-dev/cli",
   "version": "1.0.1",
   "description": "tdd-cli-dev cli",
-  "author": "sjfewo <245476427@qq.com>",
+  "author": "tdd",
   "homepage": "",
   "license": "ISC",
   "main": "",
@@ -17,7 +17,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.npm.taobao.org/",
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "scripts": {
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@tdd-cli-dev/log": "file:../../utils/log",
+    "@tdd-cli-dev/get-npm-info": "file:../../utils/get-npm-info",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "import-local": "^3.1.0",
