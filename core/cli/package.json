@@ -1,6 +1,6 @@
 {
   "name": "@tdd-cli-dev/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "tdd-cli-dev cli",
   "author": "tdd",
   "homepage": "",
@@ -17,7 +17,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
+    "registry": "https://registry.npm.taobao.org/",
     "access": "public"
   },
   "scripts": {

@@ -17,11 +17,10 @@ const log = require('@tdd-cli-dev/log');
 
 const pkg = require('../package.json');
 const constant = require('./const');
-const dotenv = require("dotenv");
 
-let args,config;
+let args;
 
-function core() {
+async function core() {
    try {
        checkPkgVersion();
        checkNodeVersion();
@@ -29,23 +28,22 @@ function core() {
        checkUserHome();
        checkInputArgs();
        checkEnv();
-       checkGlobalUpdate();
+       await checkGlobalUpdate();
    } catch (e) {
        log.error(e.message)
    }
 }
 
 // 检查是否需要全局更新
-function checkGlobalUpdate() {
-    // 获取当前版本号和模块名
-    const currentVersion = pkg.version;
-    const npmName = pkg.name;
-    // 调用npm API, 获取所有版本号
-    const { getNpmInfo } = require('@tdd-cli-dev/get-npm-info');
-    getNpmInfo(npmName);
-    // 提取所有版本号, 对比那些版本号是大于当前版本号
-
-    // 获取最新的版本号, 提示用户更新到最新版本
+async function checkGlobalUpdate() {
+    const pkgName = require('../../../package.json');
+    const currentVersion = pkgName.version;
+    const npmName = pkgName.name;
+    const { getNpmSemverVersion } = require('@tdd-cli-dev/get-npm-info');
+    const lastVersions = await getNpmSemverVersion(currentVersion,npmName);
+    if (lastVersions && semver.gt(lastVersions, currentVersion)) {
+        log.warn('更新提示',colors.yellow(`请手动更新 ${npmName}, 当前版本: ${currentVersion}, 最新版本: ${lastVersions}, 更新命令: npm install -g ${npmName}`))
+    }
 
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "tdd-cli-dev",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "tdd-cli dev",
   "main": "index.js",
   "scripts": {
