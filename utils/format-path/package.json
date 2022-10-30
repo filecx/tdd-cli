@@ -1,7 +1,7 @@
 {
-  "name": "@tdd-cli-dev/exec",
+  "name": "@tdd-cli-dev/format-path",
   "version": "1.0.0",
-  "description": "tdd-cli-dev execute package",
+  "description": "format path",
   "author": "sjfewo <245476427@qq.com>",
   "homepage": "https://github.com/filecx/tdd-cli#readme",
   "license": "ISC",
@@ -21,13 +21,9 @@
     "url": "git+https://github.com/filecx/tdd-cli.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@tdd-cli-dev/exec.test.js"
+    "test": "node ./__tests__/@tdd-cli-dev/format-path.test.js"
   },
   "bugs": {
     "url": "https://github.com/filecx/tdd-cli/issues"
-  },
-  "dependencies": {
-    "@tdd-cli-dev/package": "file:../../models/package",
-    "@tdd-cli-dev/log": "file:../../utils/log"
   }
 }
