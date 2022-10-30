@@ -24,9 +24,11 @@
     "test": "echo \"Run testing from core\""
   },
   "dependencies": {
-    "@tdd-cli-dev/log": "file:../../utils/log",
     "@tdd-cli-dev/get-npm-info": "file:../../utils/get-npm-info",
+    "@tdd-cli-dev/log": "file:../../utils/log",
+    "@tdd-cli-dev/init": "file:../../commands/init",
     "colors": "^1.4.0",
+    "commander": "^6.2.1",
     "dotenv": "^8.2.0",
     "import-local": "^3.1.0",
     "minimist": "^1.2.7",

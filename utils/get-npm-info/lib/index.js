@@ -45,6 +45,7 @@ async function getNpmSemverVersion(baseVersion, npmName, registry) {
     if (newVersions && newVersions.length > 0) {
         return newVersions[0];
     }
+    return null;
 }
 
 module.exports = {
