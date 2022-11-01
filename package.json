@@ -10,7 +10,8 @@
   "author": "tdd",
   "license": "ISC",
   "devDependencies": {
-    "lerna": "^6.0.0"
+    "lerna": "^6.0.0",
+    "@tdd-cli-dev/init": "^1.0.0"
   },
   "workspaces": [
     "packages/*"

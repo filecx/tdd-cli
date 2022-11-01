@@ -10,7 +10,7 @@ const SETTINGS = {
 
 const CACHE_DIR = 'dependencies';
 
-function exec() {
+async function exec() {
     // 1. targetPath -> modulePath
     // 2. modulePath -> Package(npm模块)
     // 3. Package.getRootFile(获取入口文件)
@@ -24,7 +24,7 @@ function exec() {
     const cmdObj = arguments[arguments.length-1];
     const cmdName = cmdObj.name();
     const packageName = SETTINGS[cmdName];
-    const packageVersion = 'latest';
+    const packageVersion = '1.0.0';
 
     if (!targetPath) {
         targetPath = path.resolve(homePath, CACHE_DIR); // 生成缓存路径
@@ -37,11 +37,12 @@ function exec() {
             packageName,
             packageVersion
         });
-        if (pkg.exists()) {
+        if (await pkg.exists()) {
             // 更新package
+           await pkg.update();
         } else {
             // 安装package
-            pkg.install()
+            await pkg.install();
         }
     } else {
          pkg = new Package({
@@ -50,6 +51,7 @@ function exec() {
             packageVersion
         });
     }
+    console.log(await pkg.exists());
     const rootFile = pkg.getRootFilePath();
     if (rootFile) {
         require(rootFile).apply(null,arguments);
