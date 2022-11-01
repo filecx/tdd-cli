@@ -36,11 +36,14 @@ class Package {
         if (this.packageVersion === 'latest') {
             this.packageVersion = await getNpmLatestVersion(this.packageName);
         }
-        console.log(this.packageVersion);
     }
 
     get cacheFilePath() {
         return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${this.packageVersion}@${this.packageName}`)
+    }
+
+    getSpecificCacheFilePath(packageVersion) {
+        return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${packageVersion}@${this.packageName}`)
     }
 
     // 判断当前Package是否存在
@@ -69,22 +72,45 @@ class Package {
     // 更新Package
     async update() {
         await this.prepare();
+        // 1.获取最新的npm模块版本号
+        const latestPackageVersion = await getNpmLatestVersion(this.packageName);
+        // 2.查询最新版本号对应的路径是否存在
+        const latestFilePath = this.getSpecificCacheFilePath(latestPackageVersion);
+        // 3.如果不存在, 则直接安装最新版本号
+        if (pathExists(latestFilePath)) {
+            await npmInstall({
+                root: this.targetPath,
+                storeDir: this.storeDir,
+                registry: getDefaultRegistry(),
+                pkgs: [
+                    { name: this.packageName, version: latestPackageVersion }
+                ]
+            });
+            this.packageVersion = latestPackageVersion;
+        }
     }
 
     // 获取入口文件的路径
     getRootFilePath() {
-        // 1.获取package.json所在目录 - pkg-dir
-        const dir = pkgDir(this.targetPath);
-        // 2.读取package.json - require()
-        if (dir) {
-            const pkgFile = require(path.resolve(dir, 'package.json'));
-            // 3.main/lib - path
-            if (pkgFile && pkgFile.main) {
-                return formatPath(path.resolve(dir, pkgFile.main));
-            }
-        }
-        return null;
-        // 4.路径的兼容(macOS/windows)
+      function _getRootFile(targetPath) {
+          // 1.获取package.json所在目录 - pkg-dir
+          const dir = pkgDir(targetPath);
+          // 2.读取package.json - require()
+          if (dir) {
+              const pkgFile = require(path.resolve(dir, 'package.json'));
+              // 3.main/lib - path
+              if (pkgFile && pkgFile.main) {
+                  return formatPath(path.resolve(dir, pkgFile.main));
+              }
+          }
+          return null;
+          // 4.路径的兼容(macOS/windows)
+      }
+      if (this.storeDir) {
+        return _getRootFile(this.cacheFilePath)
+      } else {
+        return _getRootFile(this.targetPath);
+      }
     }
 }
 
