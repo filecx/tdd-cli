@@ -14,7 +14,7 @@ const userHome = require('user-home');
 const pathExists = require('path-exists').sync;
 const commander = require('commander');
 const log = require('@tdd-cli-dev/log');
-const init = require('@tdd-cli-dev/init');
+// const init = require('@tdd-cli-dev/init');
 const exec = require('@tdd-cli-dev/exec');
 
 
@@ -84,7 +84,7 @@ function registerCommand() {
 
 async function prepare() {
     checkPkgVersion();
-    checkNodeVersion();
+    // checkNodeVersion();
     checkRoot();
     checkUserHome();
     checkEnv();
