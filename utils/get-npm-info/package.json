@@ -1,5 +1,5 @@
 {
-  "name": "get-npm-info",
+  "name": "@tdd-cli-dev/get-npm-info",
   "version": "1.0.0",
   "description": "get npm info",
   "author": "sjfewo <245476427@qq.com>",
