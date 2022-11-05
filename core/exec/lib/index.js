@@ -1,5 +1,6 @@
 'use strict';
 
+const cp = require('child_process');
 const Package = require('@tdd-cli-dev/package');
 const log = require('@tdd-cli-dev/log');
 const path = require("path");
@@ -54,12 +55,49 @@ async function exec() {
     const rootFile = pkg.getRootFilePath();
     if (rootFile) {
         try {
-            require(rootFile).call(null,Array.from(arguments));
+            // require(rootFile).call(null,Array.from(arguments));
+            // 在node子进程中调用
+            const args = Array.from(arguments);
+            const cmd = args[args.length-1];
+            const o = Object.create(null);
+            Object.keys(cmd).forEach(key => {
+                if (cmd.hasOwnProperty(key) &&
+                    !key.startsWith('_') &&
+                    key !== 'parent') {
+                    o[key] = cmd[key];
+                }
+            })
+            args[args.length-1] = 0;
+            console.log(o)
+            const code = `require('${rootFile}').call(null,${JSON.stringify(args)})`;
+            const child = spawn('node',['-e', code],{
+                cwd: process.cwd(),
+                stdio: 'inherit'
+            });
+            child.on('error', err => {
+                log.error(err.message);
+                process.exit(1);
+            });
+            child.on('exit', e => {
+                log.verbose('命令执行成功:' +e);
+                process.exit(e);
+            })
+            // child.stdout.on('data', (chunk => {}));
+            // child.stderr.on('data', (chunk => {}));
         } catch (err) {
             log.error(err.message);
         }
     }
 
+}
+
+// 兼容window操作系统
+function spawn(command, args, options) {
+    const win32 = process.platform === 'win32';
+
+    const cmd = win32 ? 'cmd' : command;
+    const cmdArgs = win32 ? ['/c'].concat(command, args) : args;
+    return cp.spawn(cmd, cmdArgs, options || {});
 }
 
 module.exports = exec;

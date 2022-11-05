@@ -93,9 +93,9 @@ async function prepare() {
 
 // 检查是否需要全局更新
 async function checkGlobalUpdate() {
-    const pkgName = require('../../../package.json');
-    const currentVersion = pkgName.version;
-    const npmName = pkgName.name;
+    // const pkgName = require('../../../package.json');
+    const currentVersion = pkg.version;
+    const npmName = pkg.name;
     const { getNpmSemverVersion } = require('@tdd-cli-dev/get-npm-info');
     const lastVersions = await getNpmSemverVersion(currentVersion,npmName);
     if (lastVersions && semver.gt(lastVersions, currentVersion)) {
