@@ -9,7 +9,7 @@ const SETTINGS = {
     init: '@tdd-cli-dev/init'
 };
 
-const CACHE_DIR = 'dependencies';
+const CACHE_DIR = 'dependencies/';
 
 async function exec() {
     // 1. targetPath -> modulePath
@@ -61,25 +61,23 @@ async function exec() {
             const cmd = args[args.length-1];
             const o = Object.create(null);
             Object.keys(cmd).forEach(key => {
-                if (cmd.hasOwnProperty(key) &&
-                    !key.startsWith('_') &&
-                    key !== 'parent') {
+                if (cmd.hasOwnProperty(key) && !key.startsWith('_') && key !== 'parent') {
                     o[key] = cmd[key];
                 }
             })
-            args[args.length-1] = 0;
-            console.log(o)
+            args[args.length-1] = o;
+            // console.log(rootFile);
             const code = `require('${rootFile}').call(null,${JSON.stringify(args)})`;
             const child = spawn('node',['-e', code],{
                 cwd: process.cwd(),
-                stdio: 'inherit'
+                stdio: 'inherit' // 父进程中调用
             });
             child.on('error', err => {
                 log.error(err.message);
                 process.exit(1);
             });
             child.on('exit', e => {
-                log.verbose('命令执行成功:' +e);
+                log.verbose('命令执行成功:' + e);
                 process.exit(e);
             })
             // child.stdout.on('data', (chunk => {}));
@@ -94,7 +92,6 @@ async function exec() {
 // 兼容window操作系统
 function spawn(command, args, options) {
     const win32 = process.platform === 'win32';
-
     const cmd = win32 ? 'cmd' : command;
     const cmdArgs = win32 ? ['/c'].concat(command, args) : args;
     return cp.spawn(cmd, cmdArgs, options || {});

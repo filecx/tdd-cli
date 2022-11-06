@@ -103,6 +103,7 @@ class Package {
                   return formatPath(path.resolve(dir, pkgFile.main));
               }
           }
+
           return null;
           // 4.路径的兼容(macOS/windows)
       }
